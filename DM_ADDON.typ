@@ -1,11 +1,10 @@
-#import "../../template.typ": *
+#import "dm_addon_template.typ": *
 #let title = "Дополнительные задачи"
-#let author = "Contributors: \n Морфей \n Бикмухаметов Тагир \n Бакалова Екатерина \n Цинман Семён \n Темерханов Руслан \n Коротчин Андрей \n Артёмов Михаил \n Загонов Дмитрий"
-#let course = "Дискретная математика"
-#let due_time = "до конца времён"
+#let author = "Contributors: \n Морфей \n Бикмухаметов Тагир \n Бакалова Екатерина \n Цинман Семён \n Темерханов Руслан \n Коротчин Андрей \n Артёмов Михаил \n Загонов Дмитрий \n Коркодинов Павел"
+#let course = "Дискретная математика 1"
 #let group = "Группы БЭАД241, БЭАД242, БЭАД231, БПМИ2310"
-#show: footer_header.with(title, "Бригада", course, due_time, group)
-#show: title_page.with(title, author, course, due_time, group)
+#show: footer_header.with(title, "Бригада", course, group)
+#show: title_page.with(title, author, course, group)
 #show: template
 #show link: underline
 
