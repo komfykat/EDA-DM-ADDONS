@@ -140,3 +140,6 @@
   features: ("ss01",),
   box($cal(it)$),
 )
+#let qed = {
+  h(1fr); $qed$
+}
