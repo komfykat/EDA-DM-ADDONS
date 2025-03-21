@@ -1,22 +1,22 @@
-#let problem_counter = counter("problem")
 #show link: underline
+#let problem_counter = counter("problem")
+#set page(numbering: "1")
 
 #let template(doc) = [
   #set page(
     paper: "a4",
     margin: (
-      top: 1cm, 
+      top: 1cm,
       left: 1cm,
       right: 1cm,
-      bottom: 1.75cm),
+      bottom: 1.75cm,
+    ),
   )
   #set text(
     font: "New Computer Modern",
     lang: "ru",
   )
-  #set par(
-    justify: true,
-  )
+  #set par(justify: true)
   #set math.mat(
     column-gap: .8em,
     row-gap: .8em,
@@ -28,31 +28,31 @@
 
 #let footer_header(title, author, course, group, body) = {
   set page(
-    footer: locate(
-      loc => if (counter(page).at(loc).first()==1){
+    footer: context {
+      let current_page = counter(page).get().first()
+      if (current_page == 1) {
         none
       } else {
-        let page_number = counter(page).at(loc).first()
-        let total_pages = counter(page).final(loc).last()
+        let total_pages = counter(page).final().first()
         line(length: 100%)
-        [Стр. #page_number из #total_pages]
+        [Стр. #current_page из #total_pages]
         [#h(1fr)#author | #course: #title]
       }
-    ),
+    },
   )
   body
 }
 
 #let title_page(title, author, course, group, body) = {
   block(
-    height:20%,
-    fill:none
+    height: 10%,
+    fill: none,
   )
   align(center, text(20pt)[*#course*])
   align(center, text(17pt)[*#title*])
   block(
-    height: 30%, 
-    fill: none
+    height: 30%,
+    fill: none,
   )
   align(center, text(16pt)[*#author*])
   align(center, text(11pt)[*#group*])
@@ -60,21 +60,26 @@
   body
 }
 
-#let problem(no_header: false, name: none, body) = {
+#let problem(no_header: false, name: none, number: none, body) = {
   if name != none {
     name = " (" + name + ")"
   }
-  if not no_header {
-    [= Задание #problem_counter.step() #problem_counter.display()#name]
-  } else {
+  if no_header {
     none
+  } else {
+    if number == none {
+      problem_counter.step()
+      [= Задание #context{problem_counter.display() } #name]
+    } else {
+      [= Задание #number #name]
+    }
   }
   block(
-    fill:rgb(240, 240, 255),
+    fill: rgb(240, 240, 255),
     width: 100%,
-    inset:8pt,
+    inset: 8pt,
     radius: 4pt,
-    body
+    body,
   )
 }
 
@@ -86,17 +91,17 @@
     none
   }
   line(length: 100%)
-    block(
+  block(
     fill: rgb(240, 255, 240),
     width: 100%,
     inset: 8pt,
     radius: 4pt,
-    body
+    body,
   )
 }
 
 #let answer(type: "answer", no_header: false, body) = {
-  let title = none;
+  let title = none
   if type == "result" {
     title = [Итого:]
   } else if type == "answer" {
@@ -111,7 +116,7 @@
     width: 100%,
     inset: 8pt,
     radius: 4pt,
-    [#body]
+    [#body],
   )
 }
 
@@ -141,5 +146,6 @@
   box($cal(it)$),
 )
 #let qed = {
-  h(1fr); $qed$
+  h(1fr)
+  $qed$
 }
